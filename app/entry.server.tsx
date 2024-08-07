@@ -16,6 +16,13 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    scriptSrc: [
+      "'unsafe-inline'",
+      'http://localhost:3000',
+      'https://cdn.shopify.com',
+      'https://www.googletagmanager.com',
+    ],
+    connectSrc: ['http://localhost:3000', 'www.googletagmanager.com'],
   });
 
   const body = await renderToReadableStream(
@@ -26,7 +33,6 @@ export default async function handleRequest(
       nonce,
       signal: request.signal,
       onError(error) {
-        // eslint-disable-next-line no-console
         console.error(error);
         responseStatusCode = 500;
       },
